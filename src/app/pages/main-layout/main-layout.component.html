@@ -1,0 +1,55 @@
+<mat-sidenav-container class="container">
+
+  <mat-sidenav mode="side" opened class="sidenav">
+    <h3 class="logo">SISTEMA IBNV</h3>
+
+    <button mat-button routerLink="/principal">
+      <mat-icon>description</mat-icon>
+      Principal
+    </button>
+    <button mat-button routerLink="/financeiro">
+      <mat-icon>payments</mat-icon>
+      Financeiro
+    </button>
+    <button mat-button routerLink="/membros">
+      <mat-icon>face</mat-icon>
+      Membros
+    </button>
+    <button mat-button routerLink="/eventos">
+      <mat-icon>today</mat-icon>
+      Eventos
+    </button>
+    <button mat-button routerLink="/celulas">
+      <mat-icon>people_outline</mat-icon>
+      Células
+    </button>
+    <button mat-button routerLink="/ministerios">
+      <mat-icon>account_balance</mat-icon>
+      Ministerios
+    </button>
+    <button mat-button routerLink="/usuarios">
+      <mat-icon>person</mat-icon>
+      Usuários
+    </button>
+    <button mat-button routerLink="/upload">
+      <mat-icon>cloud_upload</mat-icon>
+      Upload Planilhas
+    </button>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <mat-toolbar color="primary">
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="logout()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

@@ -1,0 +1,79 @@
+<form [formGroup]="form" class="form-container">
+
+  <mat-card class="title">
+    <mat-card-title>Cadastro de Finanças</mat-card-title>
+
+    <mat-card-content>
+
+      <div class="form-grid">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo</mat-label>
+          <mat-select formControlName="tipo">
+            <mat-option value="entrada">Entrada</mat-option>
+            <mat-option value="saida">Saída</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Categoria</mat-label>
+          <mat-select formControlName="categoria">
+            <mat-option value="dizimo">Dízimo</mat-option>
+            <mat-option value="oferta">Oferta</mat-option>
+            <mat-option value="conta">Conta</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Valor</mat-label>
+          <input
+            class="valor"
+            matInput
+            currencyMask
+            formControlName="valor"
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', precision: 2 }"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Data</mat-label>
+          <input matInput formControlName="data" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Descrição</mat-label>
+          <input matInput formControlName="descricao" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Membro</mat-label>
+          <mat-select formControlName="membro">
+            <mat-option value="membro1">Lucas</mat-option>
+            <mat-option value="membro2">Igor</mat-option>
+            <mat-option value="membro2">Gledson</mat-option>
+            <mat-option value="membro2">Felipe</mat-option>
+            <mat-option value="membro2">Eduardo</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-stroked-button type="button" (click)="voltar()">Voltar</button>
+      @if (!isViewMode && !isEditMode) {
+        <button mat-raised-button color="primary" (click)="salvar()" [disabled]="form.invalid">
+          Salvar
+        </button>
+      }
+      @if (!isViewMode && isEditMode) {
+        <button mat-raised-button color="primary" (click)="update()" [disabled]="form.invalid">
+          Atualizar
+        </button>
+      }
+    </mat-card-actions>
+
+  </mat-card>
+
+</form>
