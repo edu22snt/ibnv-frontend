@@ -18,7 +18,7 @@ export class FinanceiroService {
     private http: HttpClient,
     protected applicationConfigService: ApplicationConfigService
   ) {
-    this.resourceUrl = this.applicationConfigService.getEndpointFor('http://localhost:8080/api/Financeiro');
+    this.resourceUrl = this.applicationConfigService.getEndpointFor('http://localhost:8080/api/financeiro');
   }
 
   create(finance: IFinanceiro): Observable<EntityResponseType> {

@@ -10,8 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSelect, MatOption } from "@angular/material/select";
 import { NgxCurrencyDirective } from 'ngx-currency';
-import { FinanceiroService } from '../../../services/financeiro-servico/financeiro.service';
+import { FinanceiroService } from '../../../services/financeiro/financeiro.service';
 import { IFinanceiro } from '../../../entities/financeiro';
+import { UploadService } from '../../../services/upload/upload.service';
 
 @Component({
   selector: 'app-financeiro-form',
@@ -41,14 +42,16 @@ export class FinanceiroFormComponent implements OnInit {
   form: FormGroup;
   isViewMode = false;
   isEditMode = false;
+  selectedFile!: File;
 
-    constructor(
-      private fb: FormBuilder,
-      private router: Router,
-      private route: ActivatedRoute,
-      private snackBar: MatSnackBar,
-      private service: FinanceiroService
-    ) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
+    private service: FinanceiroService,
+    private uploadService: UploadService
+  ) {
     this.form = this.fb.group({
       id: [''],
       tipo: ['', Validators.required],
@@ -128,6 +131,21 @@ export class FinanceiroFormComponent implements OnInit {
       console.log('Dados carregados:', res);
       if (res.body) {
         this.form.patchValue(res.body);
+      }
+    });
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  upload(): void {
+    this.uploadService.uploadImagemNotaFiscal(1, this.selectedFile).subscribe({
+      next: response => {
+        console.log('Upload realizado', response);
+      },
+      error: error => {
+        console.error(error);
       }
     });
   }

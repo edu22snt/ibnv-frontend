@@ -4,7 +4,7 @@ import { IMembro } from "./membro";
 export interface ICelula {
     id: number;
     nome: string;
-    lideres: IMembro[];
+    lider: string;
     endereco: IEndereco;
     diaSemana: string;
     horario: string;
@@ -15,7 +15,7 @@ export class Celula implements ICelula {
     constructor(
         public id: number,
         public nome: string,
-        public lideres: IMembro[],
+        public lider: string,
         public endereco: IEndereco,
         public diaSemana: string,
         public horario: string,

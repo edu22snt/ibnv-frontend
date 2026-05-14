@@ -1,6 +1,6 @@
 import { FormsModule } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FinanceiroService } from '../../services/financeiro-servico/financeiro.service';
+import { FinanceiroService } from '../../services/financeiro/financeiro.service';
 import { HttpResponse } from '@angular/common/http';
 import { IFinanceiro } from '../../entities/financeiro';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';

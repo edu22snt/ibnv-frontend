@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApplicationConfigService } from '../../core/config/application-config.service';
+import { EntityResponseType } from '../financeiro/financeiro.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,24 +18,9 @@ export class UploadService {
     this.resourceUrl = this.applicationConfigService.getEndpointFor('http://localhost:8080/api/upload');
   }
 
-  uploadBancorbras(file: File) {
+  uploadImagemNotaFiscal(id: number, arquivo: File): Observable<EntityResponseType> {
     const formData = new FormData();
-    formData.append('file', file);
-
-    return this.http.post(this.resourceUrl + '/bancorbras', formData, { responseType: 'text' });
-  }
-
-  uploadHs(file: File) {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    return this.http.post(this.resourceUrl + '/hs', formData, { responseType: 'text' });
-  }
-
-  uploadPrestacaoServico(file: File) {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    return this.http.post(this.resourceUrl + '/prestacaoServico', formData, { responseType: 'text' });
+    formData.append('arquivo', arquivo);
+    return this.http.post<any>(`${this.resourceUrl}/notaFiscal/${id}/imagem`,formData,{observe: 'response'});
   }
 }

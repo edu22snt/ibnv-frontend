@@ -56,6 +56,15 @@
           </mat-select>
         </mat-form-field>
 
+        <mat-form-field appearance="outline">
+          <mat-label>Nota Fiscal</mat-label>
+          <input type="file" (change)="onFileSelected($event)" />
+        </mat-form-field>
+
+        <button (click)="upload()">
+          Upload
+        </button>
+
       </div>
 
     </mat-card-content>

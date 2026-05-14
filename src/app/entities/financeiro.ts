@@ -1,4 +1,5 @@
 import { IMembro } from "./membro";
+import { INotaFiscal } from "./nota-fiscal";
 
 export interface IFinanceiro {
     id: number;
@@ -8,6 +9,7 @@ export interface IFinanceiro {
     data: string;
     descricao: string;
     membro: IMembro;
+    notaFiscal?: INotaFiscal;
 }
 
 export class Financeiro implements IFinanceiro {
@@ -18,7 +20,8 @@ export class Financeiro implements IFinanceiro {
         public valor: number,
         public data: string,
         public descricao: string,
-        public membro: IMembro
+        public membro: IMembro,
+        public notaFiscal?: INotaFiscal
     ) {}
 }
 
