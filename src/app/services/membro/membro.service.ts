@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApplicationConfigService } from '../../core/config/application-config.service';
 import { IMembro } from '../../entities/membro';
+import { environment } from '../../core/environments/environment';
 
 export type EntityResponseType = HttpResponse<IMembro>;
 export type EntityArrayResponseType = HttpResponse<IMembro[]>;
@@ -11,14 +12,15 @@ export type EntityArrayResponseType = HttpResponse<IMembro[]>;
   providedIn: 'root'
 })
 export class MembroService {
-
   protected resourceUrl: string;
+  protected domain: string | undefined;
 
   constructor(
     private http: HttpClient,
     protected applicationConfigService: ApplicationConfigService
   ) {
-    this.resourceUrl = this.applicationConfigService.getEndpointFor('http://localhost:8080/api/membro');
+    this.domain = environment.domain;
+    this.resourceUrl = this.applicationConfigService.getEndpointFor(`${this.domain}/api/membro`);
   }
 
   create(membro: IMembro): Observable<EntityResponseType> {

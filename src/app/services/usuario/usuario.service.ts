@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { IUsuario } from '../../entities/usuario';
 import { ApplicationConfigService } from '../../core/config/application-config.service';
 import { Observable } from 'rxjs';
+import { environment } from '../../core/environments/environment';
 
 export type EntityResponseType = HttpResponse<IUsuario>;
 export type EntityArrayResponseType = HttpResponse<IUsuario[]>;
@@ -11,14 +12,15 @@ export type EntityArrayResponseType = HttpResponse<IUsuario[]>;
   providedIn: 'root'
 })
 export class UsuarioService {
-
   protected resourceUrl: string;
+  protected domain: string | undefined;
 
   constructor(
     private http: HttpClient,
     protected applicationConfigService: ApplicationConfigService
   ) {
-    this.resourceUrl = this.applicationConfigService.getEndpointFor('http://localhost:8080/api/usuario');
+    this.domain = environment.domain;
+    this.resourceUrl = this.applicationConfigService.getEndpointFor(`${this.domain}/api/usuario`);
   }
 
   create(repasse: IUsuario): Observable<EntityResponseType> {

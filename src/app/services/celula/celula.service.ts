@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApplicationConfigService } from '../../core/config/application-config.service';
 import { ICelula } from '../../entities/celula';
+import { environment } from '../../core/environments/environment';
 
 export type EntityResponseType = HttpResponse<ICelula>;
 export type EntityArrayResponseType = HttpResponse<ICelula[]>;
@@ -11,14 +12,15 @@ export type EntityArrayResponseType = HttpResponse<ICelula[]>;
   providedIn: 'root'
 })
 export class CelulaService {
-
   protected resourceUrl: string;
+  protected domain: string | undefined;
 
   constructor(
     private http: HttpClient,
     protected applicationConfigService: ApplicationConfigService
   ) {
-    this.resourceUrl = this.applicationConfigService.getEndpointFor('http://localhost:8080/api/celula');
+    this.domain = environment.domain;
+    this.resourceUrl = this.applicationConfigService.getEndpointFor(`${this.domain}/api/celula`);
   }
 
   create(membro: ICelula): Observable<EntityResponseType> {

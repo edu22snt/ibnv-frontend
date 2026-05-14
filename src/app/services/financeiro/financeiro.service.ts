@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApplicationConfigService } from '../../core/config/application-config.service';
 import { Observable } from 'rxjs';
 import { IFinanceiro } from '../../entities/financeiro';
+import { environment } from '../../core/environments/environment';
 
 export type EntityResponseType = HttpResponse<IFinanceiro>;
 export type EntityArrayResponseType = HttpResponse<IFinanceiro[]>;
@@ -11,14 +12,15 @@ export type EntityArrayResponseType = HttpResponse<IFinanceiro[]>;
   providedIn: 'root'
 })
 export class FinanceiroService {
-
   protected resourceUrl: string;
+  protected domain: string | undefined;
 
   constructor(
     private http: HttpClient,
     protected applicationConfigService: ApplicationConfigService
   ) {
-    this.resourceUrl = this.applicationConfigService.getEndpointFor('http://localhost:8080/api/financeiro');
+    this.domain = environment.domain;
+    this.resourceUrl = this.applicationConfigService.getEndpointFor(`${this.domain}/api/financeiro`);
   }
 
   create(finance: IFinanceiro): Observable<EntityResponseType> {

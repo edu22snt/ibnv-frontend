@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApplicationConfigService } from '../../core/config/application-config.service';
 import { IEvento } from '../../entities/evento';
+import { environment } from '../../core/environments/environment';
 
 export type EntityResponseType = HttpResponse<IEvento>;
 export type EntityArrayResponseType = HttpResponse<IEvento[]>;
@@ -11,14 +12,15 @@ export type EntityArrayResponseType = HttpResponse<IEvento[]>;
   providedIn: 'root'
 })
 export class EventoService {
-
   protected resourceUrl: string;
+  protected domain: string | undefined;
 
   constructor(
     private http: HttpClient,
     protected applicationConfigService: ApplicationConfigService
   ) {
-    this.resourceUrl = this.applicationConfigService.getEndpointFor('http://localhost:8080/api/evento');
+    this.domain = environment.domain;
+    this.resourceUrl = this.applicationConfigService.getEndpointFor(`${this.domain}/api/evento`);
   }
 
   create(evento: IEvento): Observable<EntityResponseType> {

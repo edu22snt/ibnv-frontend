@@ -1,19 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApplicationConfigService } from '../../core/config/application-config.service';
+import { environment } from '../../core/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RelatorioService {
-
   protected resourceUrl: string;
-
+  protected domain: string | undefined;
+  
   constructor(
     private http: HttpClient,
     protected applicationConfigService: ApplicationConfigService
   ) {
-    this.resourceUrl = this.applicationConfigService.getEndpointFor('http://localhost:8080/api/relatorio');
+    this.domain = environment.domain;
+    this.resourceUrl = this.applicationConfigService.getEndpointFor(`${this.domain}/api/relatorio`);
   }
 
   relatorioFinanceiro(param: string): void {
