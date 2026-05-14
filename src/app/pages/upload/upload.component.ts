@@ -58,63 +58,63 @@ export class UploadComponent {
     this.fileName = file.name;
   }
 
-  upload() {
-    if (!this.selectedFile || !this.tipoPlanilha) return;
-    this.loading = true;
-    if (this.tipoPlanilha === 'BANCORBRAS') {
-      this.uploadBancorbras();
-    } else if (this.tipoPlanilha === 'HS') {
-      this.uploadHs();
-    } else if (this.tipoPlanilha === 'PRESTACAO_SERVICO') {
-      this.uploadPrestacaoServico();
-    }
-  }
+  // upload() {
+  //   if (!this.selectedFile || !this.tipoPlanilha) return;
+  //   this.loading = true;
+  //   if (this.tipoPlanilha === 'BANCORBRAS') {
+  //     this.uploadBancorbras();
+  //   } else if (this.tipoPlanilha === 'HS') {
+  //     this.uploadHs();
+  //   } else if (this.tipoPlanilha === 'PRESTACAO_SERVICO') {
+  //     this.uploadPrestacaoServico();
+  //   }
+  // }
 
-  uploadBancorbras(): void {
-    this.service.uploadBancorbras(this.selectedFile).subscribe({
-      next: (res: string) => {
-        this.loading = false;
-        this.snackBar.open(res, 'Fechar', { duration: 3000 });
-        this.reset();
-      },
-      error: () => {
-        this.loading = false;
-        this.snackBar.open('Erro ao importar as informações Bancorbrás', 'Fechar', { duration: 3000 });
-      }
-    });
-  }
+  // uploadBancorbras(): void {
+  //   this.service.uploadBancorbras(this.selectedFile).subscribe({
+  //     next: (res: string) => {
+  //       this.loading = false;
+  //       this.snackBar.open(res, 'Fechar', { duration: 3000 });
+  //       this.reset();
+  //     },
+  //     error: () => {
+  //       this.loading = false;
+  //       this.snackBar.open('Erro ao importar as informações Bancorbrás', 'Fechar', { duration: 3000 });
+  //     }
+  //   });
+  // }
 
-  uploadHs(): void {
-    this.service.uploadHs(this.selectedFile).subscribe({
-      next: (res: string) => {
-        console.log("Resposta do upload HS:", res);
-        this.loading = false;
-        this.snackBar.open(res, 'Fechar', { duration: 3000});
-        this.reset();
-      },
-      error: (err) => {
-        this.loading = false;
-        console.error(err);
-        this.snackBar.open('Erro ao importar as informações HS', 'Fechar', {
-          duration: 3000
-        });
-      }
-    });
-  }
+  // uploadHs(): void {
+  //   this.service.uploadHs(this.selectedFile).subscribe({
+  //     next: (res: string) => {
+  //       console.log("Resposta do upload HS:", res);
+  //       this.loading = false;
+  //       this.snackBar.open(res, 'Fechar', { duration: 3000});
+  //       this.reset();
+  //     },
+  //     error: (err) => {
+  //       this.loading = false;
+  //       console.error(err);
+  //       this.snackBar.open('Erro ao importar as informações HS', 'Fechar', {
+  //         duration: 3000
+  //       });
+  //     }
+  //   });
+  // }
 
-  uploadPrestacaoServico(): void {
-    this.service.uploadPrestacaoServico(this.selectedFile).subscribe({
-      next: (res: string) => {
-        this.loading = false;
-        this.snackBar.open(res, 'Fechar', { duration: 3000 });
-        this.reset();
-      },
-      error: () => {
-        this.loading = false;
-        this.snackBar.open('Erro ao importar as informações de prestação de serviço', 'Fechar', { duration: 3000 });
-      }
-    });
-  }
+  // uploadPrestacaoServico(): void {
+  //   this.service.uploadPrestacaoServico(this.selectedFile).subscribe({
+  //     next: (res: string) => {
+  //       this.loading = false;
+  //       this.snackBar.open(res, 'Fechar', { duration: 3000 });
+  //       this.reset();
+  //     },
+  //     error: () => {
+  //       this.loading = false;
+  //       this.snackBar.open('Erro ao importar as informações de prestação de serviço', 'Fechar', { duration: 3000 });
+  //     }
+  //   });
+  // }
 
   reset() {
     this.selectedFile = undefined!;
