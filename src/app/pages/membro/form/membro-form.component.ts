@@ -28,7 +28,6 @@ import { IMembro } from '../../../entities/membro';
     MatSelect,
     MatOption,
     MatCardActions,
-    NgxCurrencyDirective,
     ReactiveFormsModule,
     MatButtonModule,
     MatInputModule,

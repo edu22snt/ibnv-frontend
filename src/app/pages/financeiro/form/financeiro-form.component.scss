@@ -5,7 +5,7 @@
 
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   padding-top: 5%;
 }
@@ -27,4 +27,10 @@ mat-form-field {
 
 .valor {
   text-align: left !important;
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }

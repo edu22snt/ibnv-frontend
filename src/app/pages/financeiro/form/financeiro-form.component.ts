@@ -4,7 +4,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardActions, MatCardContent, MatCardTitle, MatCard, MatCardModule } from "@angular/material/card";
-import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatFormField, MatFormFieldModule, MatLabel } from "@angular/material/form-field";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,26 +13,37 @@ import { NgxCurrencyDirective } from 'ngx-currency';
 import { FinanceiroService } from '../../../services/financeiro/financeiro.service';
 import { IFinanceiro } from '../../../entities/financeiro';
 import { UploadService } from '../../../services/upload/upload.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-financeiro-form',
   standalone: true,
   imports: [
-    MatIconModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    MatCardActions,
-    MatFormFieldModule,
-    MatCardContent,
-    MatCardTitle,
     MatCard,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatCardModule,
+    MatCardTitle,
+    MatCardContent,
+    MatCardActions,
+    MatFormField,
+    MatLabel,
     MatSelect,
     MatOption,
-    NgxCurrencyDirective
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
+    CommonModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    NgxCurrencyDirective,
+
 ],
   templateUrl: './financeiro-form.component.html',
   styleUrl: './financeiro-form.component.scss'
@@ -43,6 +54,8 @@ export class FinanceiroFormComponent implements OnInit {
   isViewMode = false;
   isEditMode = false;
   selectedFile!: File;
+  fileName: string = '';
+  errorMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -137,6 +150,19 @@ export class FinanceiroFormComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+
+    if (!this.selectedFile) return;
+
+    if (!this.selectedFile.name.endsWith('.xlsx')) {
+      this.errorMessage = 'Apenas arquivos .xlsx são permitidos';
+      this.selectedFile = undefined!;
+      this.fileName = '';
+      return;
+    }
+
+    this.errorMessage = '';
+    this.selectedFile = this.selectedFile;
+    this.fileName = this.selectedFile.name;
   }
 
   upload(): void {
@@ -148,6 +174,11 @@ export class FinanceiroFormComponent implements OnInit {
         console.error(error);
       }
     });
+  }
+
+  reset() {
+    this.selectedFile = undefined!;
+    this.fileName = '';
   }
 
 }

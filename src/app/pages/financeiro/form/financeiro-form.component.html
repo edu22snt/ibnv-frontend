@@ -56,14 +56,28 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Nota Fiscal</mat-label>
-          <input type="file" (change)="onFileSelected($event)" />
-        </mat-form-field>
+        <div class="upload-container">
+          <button mat-stroked-button color="primary" (click)="fileInput.click()">
+            Selecionar Nota Fiscal
+          </button>
 
-        <button (click)="upload()">
-          Upload
-        </button>
+          <input
+            type="file"
+            #fileInput
+            hidden
+            (change)="onFileSelected($event)"
+            accept=".xlsx,.xls,.csv"
+          />
+
+          <div class="file-info" *ngIf="fileName">
+            {{ fileName }}
+          </div>
+
+          <div class="error" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+
+        </div>
 
       </div>
 
