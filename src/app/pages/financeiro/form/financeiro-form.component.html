@@ -15,15 +15,23 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Categoria</mat-label>
-          <mat-select formControlName="categoria">
-            <mat-option value="dizimo">Dízimo</mat-option>
-            <mat-option value="oferta">Oferta</mat-option>
-            <mat-option value="conta">Conta</mat-option>
-          </mat-select>
-        </mat-form-field>
-
+        @if (form.get('tipo')?.value === 'entrada') {
+          <mat-form-field appearance="outline">
+            <mat-label>Categoria</mat-label>
+            <mat-select formControlName="categoria">
+              <mat-option value="dizimo">Dízimo</mat-option>
+              <mat-option value="oferta">Oferta</mat-option>
+            </mat-select>
+          </mat-form-field>
+        }
+        @if (form.get('tipo')?.value === 'saida') {
+          <mat-form-field appearance="outline">
+            <mat-label>Categoria</mat-label>
+            <mat-select formControlName="categoria">
+              <mat-option value="conta">Conta</mat-option>
+            </mat-select>
+          </mat-form-field>
+        }
         <mat-form-field appearance="outline">
           <mat-label>Valor</mat-label>
           <input
@@ -37,23 +45,37 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Data</mat-label>
-          <input matInput formControlName="data" />
+
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="data">
+
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker">
+          </mat-datepicker-toggle>
+
+          <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
+
+        @if (form.get('tipo')?.value === 'entrada') {
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Membro</mat-label>
+            <mat-select formControlName="membro">
+              @for (membro of membros; track $index) {
+                <mat-option
+                  [value]="membro">
+                  {{ membro.nome }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        }
 
         <mat-form-field appearance="outline">
           <mat-label>Descrição</mat-label>
-          <input matInput formControlName="descricao" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Membro</mat-label>
-          <mat-select formControlName="membro">
-            <mat-option value="membro1">Lucas</mat-option>
-            <mat-option value="membro2">Igor</mat-option>
-            <mat-option value="membro2">Gledson</mat-option>
-            <mat-option value="membro2">Felipe</mat-option>
-            <mat-option value="membro2">Eduardo</mat-option>
-          </mat-select>
+          <textarea matInput formControlName="descricao" rows="4"></textarea>
         </mat-form-field>
 
         <div class="upload-container">
@@ -68,19 +90,18 @@
             (change)="onFileSelected($event)"
             accept=".xlsx,.xls,.csv"
           />
-
-          <div class="file-info" *ngIf="fileName">
-            {{ fileName }}
-          </div>
-
-          <div class="error" *ngIf="errorMessage">
-            {{ errorMessage }}
-          </div>
-
+          @if (fileName) {
+            <div class="file-info">
+              {{ fileName }}
+            </div>
+          }
+          @if (errorMessage) {
+            <div class="error">
+              {{ errorMessage }}
+            </div>
+          }
         </div>
-
       </div>
-
     </mat-card-content>
 
     <mat-card-actions align="end">

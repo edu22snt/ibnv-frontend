@@ -142,6 +142,30 @@ export const routes: Routes = [
             .then(m => m.MinisterioFormComponent)
       },
       {
+        path: 'endereco',
+        loadComponent: () =>
+          import('./pages/endereco/endereco.component')
+            .then(m => m.EnderecoComponent)
+      },
+      {
+        path: 'endereco-form',
+        loadComponent: () =>
+          import('./pages/endereco/form/endereco-form.component')
+            .then(m => m.EnderecoFormComponent)
+      },
+      {
+        path: 'endereco-form/view/:id',
+        loadComponent: () =>
+          import('./pages/endereco/form/endereco-form.component')
+            .then(m => m.EnderecoFormComponent)
+      },
+      {
+        path: 'endereco-form/edit/:id',
+        loadComponent: () =>
+          import('./pages/endereco/form/endereco-form.component')
+            .then(m => m.EnderecoFormComponent)
+      },
+      {
         path: 'usuarios',
         loadComponent: () =>
           import('./pages/usuario/usuario.component')
@@ -164,12 +188,6 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/usuario/form/usuario-form.component')
             .then(m => m.UsuarioFormComponent)
-      },
-      {
-        path: 'upload',
-        loadComponent: () =>
-          import('./pages/upload/upload.component')
-            .then(m => m.UploadComponent)
       },
       {
         path: '',

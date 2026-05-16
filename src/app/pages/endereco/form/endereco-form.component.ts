@@ -16,7 +16,7 @@ import { IMembro } from '../../../entities/membro';
 import { IEndereco } from '../../../entities/endereco';
 
 @Component({
-  selector: 'app-membro-form',
+  selector: 'app-endereco-form',
   standalone: true,
   imports: [
     MatCard,
@@ -38,10 +38,10 @@ import { IEndereco } from '../../../entities/endereco';
     MatDatepickerModule,
     MatNativeDateModule
   ],
-  templateUrl: './membro-form.component.html',
-  styleUrl: './membro-form.component.scss'
+  templateUrl: './endereco-form.component.html',
+  styleUrl: './endereco-form.component.scss'
 })
-export class MembroFormComponent implements OnInit {
+export class EnderecoFormComponent implements OnInit {
 
     form: FormGroup;
     isViewMode = false;

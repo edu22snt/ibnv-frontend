@@ -23,8 +23,8 @@ export class CelulaService {
     this.resourceUrl = this.applicationConfigService.getEndpointFor(`${this.domain}/api/celula`);
   }
 
-  create(membro: ICelula): Observable<EntityResponseType> {
-    return this.http.post<ICelula>(this.resourceUrl + '/save', membro, {observe: 'response'});
+  create(celula: ICelula): Observable<EntityResponseType> {
+    return this.http.post<ICelula>(this.resourceUrl + '/save', celula, {observe: 'response'});
   }
 
   find(id: number): Observable<EntityResponseType> {
@@ -35,6 +35,10 @@ export class CelulaService {
     return this.http.get<ICelula[]>(`${this.resourceUrl}/findAll?page=${page}&size=${size}`, { observe: 'response' }
     );
   }
+
+  findAllNotPage(): Observable<ICelula[]> {
+    return this.http.get<ICelula[]>(`${this.domain}${this.resourceUrl}/findAllNotPage`);
+  } 
 
   searchByKeyword(param: string, page: number = 0, size: number = 10): Observable<EntityArrayResponseType> {
     return this.http.get<ICelula[]>(`${this.resourceUrl}/searchByKeyword?param=${encodeURIComponent(param)}&page=${page}&size=${size}`, { observe: 'response' });

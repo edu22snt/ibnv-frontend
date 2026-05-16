@@ -17,6 +17,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { IMembro } from '../../../entities/membro';
+import { MembroService } from '../../../services/membro/membro.service';
 
 @Component({
   selector: 'app-financeiro-form',
@@ -56,6 +58,7 @@ export class FinanceiroFormComponent implements OnInit {
   selectedFile!: File;
   fileName: string = '';
   errorMessage: string = '';
+  membros: IMembro[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -63,7 +66,8 @@ export class FinanceiroFormComponent implements OnInit {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     private service: FinanceiroService,
-    private uploadService: UploadService
+    private uploadService: UploadService,
+    private membroService: MembroService
   ) {
     this.form = this.fb.group({
       id: [''],
@@ -72,7 +76,8 @@ export class FinanceiroFormComponent implements OnInit {
       valor: ['', Validators.required],
       data: ['', Validators.required],
       descricao: ['', Validators.required],
-      membro: ['']
+      membro: [''],
+      notaFiscal: ['']
     });
   }
 
@@ -88,6 +93,7 @@ export class FinanceiroFormComponent implements OnInit {
     if (this.isViewMode) {
       this.form.disable();
     }
+    this.loadMembros();
   }
 
   salvar(): void {
@@ -172,6 +178,17 @@ export class FinanceiroFormComponent implements OnInit {
       },
       error: error => {
         console.error(error);
+      }
+    });
+  }
+
+  loadMembros(): void {
+    this.membroService.findAllNotPage().subscribe({
+      next: (data) => {
+        this.membros = data;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar a lista de membros', error);
       }
     });
   }
