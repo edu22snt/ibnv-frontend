@@ -11,9 +11,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MembroService } from '../../../services/membro/membro.service';
-import { IMembro } from '../../../entities/membro';
 import { IEndereco } from '../../../entities/endereco';
+import { EnderecoService } from '../../../services/endereco/endereco.service';
+import { IPais } from '../../../entities/pais';
+import { ICidade } from '../../../entities/cidade';
+import { IEstado } from '../../../entities/estado';
+import { PaisService } from '../../../services/pais/pais.service';
+import { EstadoService } from '../../../services/estado/estado.service';
+import { CidadeService } from '../../../services/cidade/cidade.service';
 
 @Component({
   selector: 'app-endereco-form',
@@ -46,25 +51,31 @@ export class EnderecoFormComponent implements OnInit {
     form: FormGroup;
     isViewMode = false;
     isEditMode = false;
-    enderecos: IEndereco[] = [];
+    paises: IPais[] = [];
+    estados: IEstado[] = [];
+    cidades: ICidade[] = [];
 
   constructor(
       private fb: FormBuilder,
       private router: Router,
       private route: ActivatedRoute,
       private snackBar: MatSnackBar,
-      private service: MembroService
+      private service: EnderecoService,
+      private servicePais: PaisService,
+      private serviceEstado: EstadoService,
+      private serviceCidade: CidadeService
     ) {
     this.form = this.fb.group({
       id: [''],
-      nome: ['', Validators.required],
-      email: ['', Validators.required],
-      telefone: ['', Validators.required],
-      dataNascimento: ['', Validators.required],
-      sexo: ['', Validators.required],
-      estadoCivil: ['', Validators.required],
-      endereco: [''],
-      ativo: ['']
+      descricao: ['', Validators.required],
+      logradouro: ['', Validators.required],
+      numero: ['', Validators.required],
+      complemento: ['', Validators.required],
+      bairro: ['', Validators.required],
+      cidade: ['', Validators.required],
+      estado: ['', Validators.required],
+      cep: ['', Validators.required],
+      pais: ['', Validators.required],
     });
   }
 
@@ -80,12 +91,17 @@ export class EnderecoFormComponent implements OnInit {
     if (this.isViewMode) {
       this.form.disable();
     }
+    this.loadPais();  
   }
 
   salvar(): void {
     if (this.form.valid) {
-      const membro: IMembro = this.form.value;
-      this.service.create(membro).subscribe({
+      const objeto: IEndereco = this.form.value;
+      objeto.pais = this.form.get('pais')?.value.nome;
+      objeto.estado = this.form.get('estado')?.value.nome;
+      objeto.cidade = this.form.get('cidade')?.value.nome;
+
+      this.service.create(objeto).subscribe({
         next: () => {
         this.voltar();
         this.snackBar.open('Salvo com sucesso!', 'Fechar', {
@@ -106,8 +122,8 @@ export class EnderecoFormComponent implements OnInit {
 
   update(): void {
     if (this.form.valid) {
-      const membro: IMembro = this.form.value;
-      this.service.update(membro).subscribe({
+      const objeto: IEndereco = this.form.value;
+      this.service.update(objeto).subscribe({
         next: () => {
         this.voltar();
         this.snackBar.open('Alterado com sucesso!', 'Fechar', {
@@ -128,7 +144,7 @@ export class EnderecoFormComponent implements OnInit {
 
   voltar(): void {
     this.form.reset();
-    this.router.navigate(['/repasse-bancorbras']);
+    this.router.navigate(['/endereco']);
   }  
 
   loadById(id: number): void {
@@ -140,6 +156,39 @@ export class EnderecoFormComponent implements OnInit {
         this.form.patchValue({
           ...data,
         });
+      }
+    });
+  }
+
+  loadPais(): void {
+    this.servicePais.findAllNotPage().subscribe({
+      next: (data) => {
+        this.paises = data;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar a lista de paises', error);
+      }
+    });
+  }
+
+  loadEstados(id: number): void {
+    this.serviceEstado.findByPaisId(id).subscribe({
+      next: (data) => {
+        this.estados = data;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar a lista de estados', error);
+      }
+    });
+  }
+
+  loadCidades(id: number): void {
+    this.serviceCidade.findByEstadoId(id).subscribe({
+      next: (data) => {
+        this.cidades = data;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar a lista de cidades', error);
       }
     });
   }

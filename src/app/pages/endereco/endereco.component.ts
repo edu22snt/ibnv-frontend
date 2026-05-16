@@ -5,16 +5,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MembroService } from '../../services/membro/membro.service';
 import { HttpResponse } from '@angular/common/http';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
-import { DatePipe } from '@angular/common';
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { RelatorioService } from '../../services/relatorio/relatorio.service';
-import { IMembro } from '../../entities/membro';
+import { IEndereco } from '../../entities/endereco';
+import { EnderecoService } from '../../services/endereco/endereco.service';
 
 @Component({
   selector: 'app-endereco',
@@ -26,7 +24,6 @@ import { IMembro } from '../../entities/membro';
     MatButtonModule,
     MatDialogModule,
     MatSnackBarModule,
-    DatePipe,
     MatFormField,
     MatLabel,
     FormsModule,
@@ -39,15 +36,17 @@ import { IMembro } from '../../entities/membro';
 export class EnderecoComponent implements OnInit {
 
   displayedColumns: string[] = [
-    'nome',
-    'email',
-    'telefone',
-    'dataNascimento',
-    'ativo',
+    'descricao',
+    'logradouro',
+    'complemento',
+    'bairro',
+    'cidade',
+    'estado',
+    'cep',
     'acoes'
   ];
 
-  dataSource = new MatTableDataSource<IMembro>();
+  dataSource = new MatTableDataSource<IEndereco>();
 
   totalElements = 0;
   pageSize = 10;
@@ -59,11 +58,10 @@ export class EnderecoComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private service: MembroService,
+    private service: EnderecoService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private router: Router,
-    private relatorioService: RelatorioService
+    private router: Router
 
   ) { }
 
@@ -73,7 +71,7 @@ export class EnderecoComponent implements OnInit {
 
   loadData(): void {
     this.service.findAll(this.pageIndex, this.pageSize).subscribe({
-      next: (res: HttpResponse<IMembro[]>) => {
+      next: (res: HttpResponse<IEndereco[]>) => {
         this.onSuccess(res.body);
       },
       error: (erro) => {
@@ -85,7 +83,7 @@ export class EnderecoComponent implements OnInit {
   searchByKeyword(): void {
     this.pageIndex = 0;
     this.service.searchByKeyword(this.searchItem, this.pageIndex, this.pageSize).subscribe({
-      next: (res: HttpResponse<IMembro[]>) => {
+      next: (res: HttpResponse<IEndereco[]>) => {
         this.onSuccess(res.body);
       },
       error: (erro) => {
@@ -144,11 +142,7 @@ export class EnderecoComponent implements OnInit {
   }
 
   new(): void {
-    this.router.navigate(['/membro-form']);
-  }
-
-  imprimir(): void {
-    this.relatorioService.relatorioMembros(this.searchItem);
+    this.router.navigate(['/endereco-form']);
   }
 
 }

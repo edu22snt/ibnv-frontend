@@ -1,120 +1,84 @@
 <form [formGroup]="form" class="form-container">
 
   <mat-card class="title">
-    <mat-card-title>Cadastro de Membro</mat-card-title>
+    <mat-card-title>Cadastro de endereço</mat-card-title>
 
     <mat-card-content>
 
       <div class="form-grid">
 
         <mat-form-field appearance="outline">
-          <mat-label>Nome</mat-label>
-          <input matInput formControlName="nome" />
-        </mat-form-field>
-
-        <!-- <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" />
-        </mat-form-field> -->
-
-        <mat-form-field appearance="outline">
-          <mat-label>E-mail</mat-label>
-          <input matInput formControlName="email" />
-
-          @if (form.get('email')?.hasError('required')) {
-            <mat-error>
-              E-mail é obrigatório
-            </mat-error>
-          }
-
-          @if (form.get('email')?.hasError('email')) {
-            <mat-error>
-              E-mail inválido
-            </mat-error>
-          }
+          <mat-label>Descrição</mat-label>
+          <input matInput formControlName="descricao" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Telefone</mat-label>
-          <input
-            matInput
-            formControlName="telefone"
-            (input)="formatarTelefone($event)"
-            placeholder="(99) 99999-9999" />
-
-            @if (form.get('telefone')?.hasError('required')) {
-              <mat-error>
-                Telefone é obrigatório
-              </mat-error>
-            }
-            @if (form.get('telefone')?.hasError('pattern')) {
-              <mat-error>
-                Telefone inválido
-              </mat-error>
-            }
+          <mat-label>Logradouro</mat-label>
+          <input matInput formControlName="logradouro" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Data de Nascimento</mat-label>
-
-          <input
-            matInput
-            [matDatepicker]="picker"
-            formControlName="dataNascimento">
-
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker">
-          </mat-datepicker-toggle>
-
-          <mat-datepicker #picker></mat-datepicker>
+          <mat-label>Número</mat-label>
+          <input matInput formControlName="numero" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Gênero</mat-label>
-          <mat-select formControlName="sexo">
-              <mat-option value="Masculino">Masculino</mat-option>
-              <mat-option value="Feminino">Feminino</mat-option>
-          </mat-select>
+          <mat-label>Complemento</mat-label>
+          <input matInput formControlName="complemento" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Estado Civil</mat-label>
-          <mat-select formControlName="estadoCivil">
-              <mat-option value="Solteiro">Solteiro</mat-option>
-              <mat-option value="Casado">Casado</mat-option>
-              <mat-option value="Divorciado">Divorciado</mat-option>
-              <mat-option value="Viúvo">Viúvo</mat-option>
-          </mat-select>
+          <mat-label>Bairro</mat-label>
+          <input matInput formControlName="bairro" />
         </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>CEP</mat-label>
+          <input matInput formControlName="cep" />
+        </mat-form-field>  
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Endereço</mat-label>
-          <mat-select formControlName="endereco">
-            @for (endereco of enderecos; track $index) {
+          <mat-label>País</mat-label>
+          <mat-select
+            formControlName="pais"
+            (selectionChange)="loadEstados($event.value.id)">
+            
+            @for (pais of paises; track $index) {
               <mat-option
-                [value]="endereco">
-                {{ endereco.descricao }}
+                [value]="pais">
+                {{ pais.nome }}
               </mat-option>
             }
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Ativo</mat-label>
-            <mat-select formControlName="ativo">
-                <mat-option value="1">SIM</mat-option>
-                <mat-option value="0">NÃO</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Ativo</mat-label>
-            <mat-select formControlName="ativo">
-                <mat-option value="1">SIM</mat-option>
-                <mat-option value="0">NÃO</mat-option>
-            </mat-select>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Estado</mat-label>
+          <mat-select
+            formControlName="estado"
+            (selectionChange)="loadCidades($event.value.id)">
+            
+            @for (estado of estados; track $index) {
+              <mat-option
+                [value]="estado">
+                {{ estado.nome }}
+              </mat-option>
+            }
+          </mat-select>
         </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Cidade</mat-label>
+          <mat-select formControlName="cidade">
+            @for (cidade of cidades; track $index) {
+              <mat-option
+                [value]="cidade">
+                {{ cidade.nome }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
       </div>
 
     </mat-card-content>

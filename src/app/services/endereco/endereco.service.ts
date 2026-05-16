@@ -28,7 +28,7 @@ export class EnderecoService {
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http.get<IEndereco>(`${this.resourceUrl}/repasse/${id}`, {observe: 'response'});
+    return this.http.get<IEndereco>(`${this.resourceUrl}/${id}`, {observe: 'response'});
   }
 
   findAll(page: number = 0, size: number = 10) {
