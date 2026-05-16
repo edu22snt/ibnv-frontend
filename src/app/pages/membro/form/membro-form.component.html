@@ -38,16 +38,16 @@
           <mat-label>Telefone</mat-label>
           <input
             matInput
-            formControlName="telefone"
+            formControlName="numTelefone"
             (input)="formatarTelefone($event)"
             placeholder="(99) 99999-9999" />
 
-            @if (form.get('telefone')?.hasError('required')) {
+            @if (form.get('numTelefone')?.hasError('required')) {
               <mat-error>
                 Telefone é obrigatório
               </mat-error>
             }
-            @if (form.get('telefone')?.hasError('pattern')) {
+            @if (form.get('numTelefone')?.hasError('pattern')) {
               <mat-error>
                 Telefone inválido
               </mat-error>
@@ -109,8 +109,8 @@
           </mat-form-field>
 
         <mat-form-field appearance="outline">
-            <mat-label>Ativo</mat-label>
-            <mat-select formControlName="ativo">
+            <mat-label>É líder?</mat-label>
+            <mat-select formControlName="lider">
                 <mat-option value="1">SIM</mat-option>
                 <mat-option value="0">NÃO</mat-option>
             </mat-select>

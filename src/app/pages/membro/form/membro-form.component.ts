@@ -61,12 +61,14 @@ export class MembroFormComponent implements OnInit {
       id: [''],
       nome: ['', Validators.required],
       email: ['', Validators.required],
-      telefone: ['', Validators.required],
+      numTelefone: ['', Validators.required],
       dataNascimento: ['', Validators.required],
       sexo: ['', Validators.required],
       estadoCivil: ['', Validators.required],
       endereco: [''],
-      ativo: ['']
+      ativo: [''],
+      dataBatismo: [''],
+      lider: ['']
     });
   }
 

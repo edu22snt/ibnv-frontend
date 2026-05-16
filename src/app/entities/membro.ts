@@ -13,7 +13,7 @@ export interface IMembro {
   ativo?: number;
   dataCadastro?: Date;
   dataBatismo?: Date;
-  lider?: boolean;
+  lider?: number;
 }
 
 export class Membro implements IMembro {
@@ -30,7 +30,7 @@ export class Membro implements IMembro {
         public ativo?: number,
         public dataCadastro?: Date,
         public dataBatismo?: Date,
-        public lider?: boolean
+        public lider?: number
     ) {}
 }
 
