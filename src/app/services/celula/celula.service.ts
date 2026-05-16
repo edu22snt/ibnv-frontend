@@ -37,7 +37,7 @@ export class CelulaService {
   }
 
   findAllNotPage(): Observable<ICelula[]> {
-    return this.http.get<ICelula[]>(`${this.domain}${this.resourceUrl}/findAllNotPage`);
+    return this.http.get<ICelula[]>(`${this.resourceUrl}/findAllNotPage`);
   } 
 
   searchByKeyword(param: string, page: number = 0, size: number = 10): Observable<EntityArrayResponseType> {

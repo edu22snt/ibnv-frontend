@@ -85,6 +85,7 @@ export class EnderecoComponent implements OnInit {
     this.service.searchByKeyword(this.searchItem, this.pageIndex, this.pageSize).subscribe({
       next: (res: HttpResponse<IEndereco[]>) => {
         this.onSuccess(res.body);
+        console.log('Resultados da busca:', res.body);
       },
       error: (erro) => {
         console.error('Erro ao carregar dados', erro);

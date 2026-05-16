@@ -14,6 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MembroService } from '../../../services/membro/membro.service';
 import { IMembro } from '../../../entities/membro';
 import { IEndereco } from '../../../entities/endereco';
+import { EnderecoService } from '../../../services/endereco/endereco.service';
 
 @Component({
   selector: 'app-membro-form',
@@ -53,7 +54,8 @@ export class MembroFormComponent implements OnInit {
       private router: Router,
       private route: ActivatedRoute,
       private snackBar: MatSnackBar,
-      private service: MembroService
+      private service: MembroService,
+      private serviceEndereco: EnderecoService
     ) {
     this.form = this.fb.group({
       id: [''],
@@ -80,6 +82,7 @@ export class MembroFormComponent implements OnInit {
     if (this.isViewMode) {
       this.form.disable();
     }
+    this.loadEnderecos();
   }
 
   salvar(): void {
@@ -128,7 +131,7 @@ export class MembroFormComponent implements OnInit {
 
   voltar(): void {
     this.form.reset();
-    this.router.navigate(['/repasse-bancorbras']);
+    this.router.navigate(['/membro']);
   }  
 
   loadById(id: number): void {
@@ -143,6 +146,17 @@ export class MembroFormComponent implements OnInit {
       }
     });
   }
+
+  loadEnderecos(): void {
+    this.serviceEndereco.findAllNotPage().subscribe({
+      next: (data) => {
+        this.enderecos = data;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar a lista de enderecos', error);
+      }
+    });
+  }  
 
   formatarTelefone(event: any): void {
     let valor = event.target.value.replace(/\D/g, '');
